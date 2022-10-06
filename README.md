@@ -10,6 +10,7 @@ Using Resource Manager will allow you to track many more Limited Use Features in
 
 ## Installation
 D&D 5E - Download [CapitalGains.ext](https://github.com/MeAndUnique/CapitalGains/releases) and place in the extensions subfolder of the Fantasy Grounds data folder.
+
 Pathfinder 1E - Download [ResourceManager.ext](https://github.com/Jstantrex/Resource-Manager/releases) and place in the extensions subfolder of the Fantasy Grounds data folder.
 
 ## Attribution
