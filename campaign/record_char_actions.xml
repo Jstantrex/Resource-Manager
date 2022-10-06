@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+	<windowclass name="charsheet_actions" merge="join">
+		<sheetdata merge="join">
+			<button_iedit name="actions_iedit">
+				<script>
+					function onValueChanged()
+						if super and super.onValueChanged then
+							super.onValueChanged();
+						end
+						local bEditMode = (getValue() == 1);
+						window.actions.subwindow.resources.subwindow.list.update(bEditMode);
+					end
+				</script>
+			</button_iedit>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="char_actions_details" merge="join">
+		<sheetdata>
+			<subwindow name="resources">
+				<anchored>
+					<top parent="spellclasslist" anchor="bottom" relation="relative" offset="0" />
+					<left />
+					<right />
+				</anchored>
+				<activate />
+				<fastinit />
+				<class>char_power_resources</class>
+			</subwindow>
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="char_power_resources">
+		<sheetdata>
+			<genericcontrol name="detailanchor">
+				<bounds>0,35,0,0</bounds>
+			</genericcontrol>
+			<genericcontrol name="resourceframe">
+				<anchored>
+					<top offset="6" />
+					<left offset="6" />
+					<right offset="-6" />
+					<bottom parent="detailanchor" relation="relative" anchor="bottom" offset="6" />
+				</anchored>
+				<frame name="groupbox2" offset="6,6,6,6" />
+				<disabled />
+			</genericcontrol>
+			<anchor_column name="columnanchor" />
+			<label name="resourcestitle">
+				<anchored height="20">
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="15" />
+					<left offset="15" />
+					<right offset="-10" />
+				</anchored>
+				<icon>char_treasure</icon>
+				<static textres="power_header_resources" />
+				<script>
+					function onClickDown()
+						return true;
+					end
+					
+					function onClickRelease()
+						local bVisible = window.list.isVisible();
+						if bVisible then
+							setFont("subwindowsmalltitle_disabled");
+							window.list.setVisible(false);
+						else
+							setFont("subwindowsmalltitle");
+							window.list.setVisible(true);
+						end
+						return true;
+					end
+				</script>
+			</label>
+			<button_iadd name="iadd">
+				<anchored position="insidetopright" offset="10,10" />
+				<target>list</target>
+			</button_iadd>
+			<windowlist name="list">
+				<script>
+					function addEntry(bFocus)
+						local w = createWindow();
+						if bFocus then
+							w.name.setFocus();
+						end
+						return w;
+					end
+					function update(bEditMode)
+						for _,w in pairs(getWindows()) do
+							w.idelete.setVisibility(bEditMode);
+						end
+					end
+				</script>
+				<anchored>
+					<top parent="columnanchor" anchor="bottom" relation="relative" offset="15" />
+					<left offset="6" />
+					<right offset="3" />
+				</anchored>
+				<skipempty />
+				<datasource>.resources</datasource>
+				<class>resource_item</class>
+				<columns width="192" fillwidth="true" />
+				<sortby><field>name</field></sortby>
+				<noscroll />
+				<allowcreate />
+				<allowdelete />
+				<footer>footer_wide</footer>
+			</windowlist>
+		</sheetdata>
+	</windowclass>
+</root>
